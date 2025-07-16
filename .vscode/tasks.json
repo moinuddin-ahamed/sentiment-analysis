@@ -1,0 +1,150 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install Dependencies",
+            "type": "shell",
+            "command": "pip",
+            "args": ["install", "-r", "requirements.txt"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Train NBoW Model",
+            "type": "shell",
+            "command": "python",
+            "args": ["train_nbow.py", "--epochs", "20", "--save_model"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Train LSTM Model",
+            "type": "shell",
+            "command": "python",
+            "args": ["train_lstm.py", "--epochs", "20", "--save_model"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Train CNN Model",
+            "type": "shell",
+            "command": "python",
+            "args": ["train_cnn.py", "--epochs", "20", "--save_model"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Train Transformer Model",
+            "type": "shell",
+            "command": "python",
+            "args": ["train_transformer.py", "--epochs", "10", "--save_model"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Inference",
+            "type": "shell",
+            "command": "python",
+            "args": ["inference.py", "--model_path", "models/nbow_model.pth", "--text", "This product is amazing!"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Interactive Inference",
+            "type": "shell",
+            "command": "python",
+            "args": ["inference.py", "--model_path", "models/nbow_model.pth"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Jupyter Notebook",
+            "type": "shell",
+            "command": "jupyter",
+            "args": ["notebook", "notebooks/"],
+            "group": "test",
+            "isBackground": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Create Sample Data",
+            "type": "shell",
+            "command": "python",
+            "args": ["-c", "import pandas as pd; import os; os.makedirs('data', exist_ok=True); pd.DataFrame([('This product is amazing! I love it.', 'positive'), ('Terrible quality, waste of money.', 'negative'), ('Great value, highly recommend.', 'positive'), ('Poor service, disappointed.', 'negative'), ('Excellent product, exceeded expectations.', 'positive'), ('Not worth the price, disappointed.', 'negative'), ('Perfect for my needs, very satisfied.', 'positive'), ('Broke after one day, terrible quality.', 'negative'), ('Outstanding quality and fast delivery.', 'positive'), ('Completely useless, don\\'t buy this.', 'negative')], columns=['review_text', 'sentiment']).to_csv('data/sample_reviews.csv', index=False); print('Sample data created!')"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}
