@@ -321,7 +321,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- Inspired by [bentrevett/pytorch-sentiment-analysis](https://github.com/bentrevett/pytorch-sentiment-analysis) tutorials
 - Built with PyTorch and modern NLP libraries
 - Thanks to the open-source community for tools and resources
 - Special thanks to Hugging Face for transformer models
