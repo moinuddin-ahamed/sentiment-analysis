@@ -76,10 +76,10 @@ class SentimentAnalyzer:
         if model_class == 'NBoW':
             self.model = NBoW(
                 vocab_size=self.model_config['vocab_size'],
-                embed_dim=self.model_config['embed_dim'],
+                embedding_dim=self.model_config['embed_dim'],
                 hidden_dim=self.model_config['hidden_dim'],
-                num_classes=self.model_config['num_classes'],
-                dropout=self.model_config['dropout']
+                output_dim=self.model_config['num_classes'],
+                dropout_rate=self.model_config['dropout']
             )
         elif model_class == 'LSTMModel':
             self.model = LSTMModel(

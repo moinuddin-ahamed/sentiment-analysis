@@ -159,10 +159,25 @@ def create_data_loaders(data, args):
     """Create data loaders."""
     print("Creating data loaders...")
     
+    # Create simple dataset class for tokenized data
+    class TokenizedDataset(torch.utils.data.Dataset):
+        def __init__(self, texts, labels):
+            self.texts = texts
+            self.labels = labels
+        
+        def __len__(self):
+            return len(self.texts)
+        
+        def __getitem__(self, idx):
+            return {
+                'text': torch.tensor(self.texts[idx], dtype=torch.long),
+                'label': torch.tensor(self.labels[idx], dtype=torch.long)
+            }
+    
     # Create datasets
-    train_dataset = ReviewDataset(data['X_train'], data['y_train'])
-    val_dataset = ReviewDataset(data['X_val'], data['y_val'])
-    test_dataset = ReviewDataset(data['X_test'], data['y_test'])
+    train_dataset = TokenizedDataset(data['X_train'], data['y_train'])
+    val_dataset = TokenizedDataset(data['X_val'], data['y_val'])
+    test_dataset = TokenizedDataset(data['X_test'], data['y_test'])
     
     # Create data loaders
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, 
@@ -181,10 +196,10 @@ def create_model(vocab_size, args):
     
     model = NBoW(
         vocab_size=vocab_size,
-        embed_dim=args.embed_dim,
+        embedding_dim=args.embed_dim,
         hidden_dim=args.hidden_dim,
-        num_classes=args.num_classes,
-        dropout=args.dropout
+        output_dim=args.num_classes,
+        dropout_rate=args.dropout
     )
     
     # Count parameters

@@ -1,5 +1,5 @@
 torch>=2.0.0
-torchtext>=0.15.0
+# torchtext>=0.15.0  # Removed due to compatibility issues
 datasets>=2.14.0
 transformers>=4.21.0
 numpy>=1.24.0

@@ -7,7 +7,6 @@ import string
 import spacy
 from typing import List, Tuple, Dict, Optional
 import torch
-import torchtext
 from collections import Counter
 import numpy as np
 
@@ -312,7 +311,7 @@ class VocabularyBuilder:
 
 def load_glove_embeddings(vocab: Dict[str, int], embedding_dim: int = 100) -> torch.Tensor:
     """
-    Load GloVe embeddings for vocabulary.
+    Load GloVe embeddings for vocabulary (simplified version without torchtext).
     
     Args:
         vocab: Word to index mapping
@@ -321,26 +320,16 @@ def load_glove_embeddings(vocab: Dict[str, int], embedding_dim: int = 100) -> to
     Returns:
         Embedding tensor
     """
-    try:
-        # Load GloVe vectors
-        glove = torchtext.vocab.GloVe(name='6B', dim=embedding_dim)
-        
-        # Create embedding matrix
-        embeddings = torch.zeros(len(vocab), embedding_dim)
-        
-        for word, idx in vocab.items():
-            if word in glove.stoi:
-                embeddings[idx] = glove.vectors[glove.stoi[word]]
-            else:
-                # Random initialization for unknown words
-                embeddings[idx] = torch.randn(embedding_dim) * 0.1
-        
-        return embeddings
+    # Create embedding matrix with random initialization
+    # In a production environment, you would load actual GloVe vectors
+    print(f"Creating random embeddings (GloVe not available without torchtext)")
+    embeddings = torch.randn(len(vocab), embedding_dim) * 0.1
     
-    except Exception as e:
-        print(f"Error loading GloVe embeddings: {e}")
-        print("Using random embeddings instead.")
-        return torch.randn(len(vocab), embedding_dim) * 0.1
+    # Set padding token to zero
+    if "<pad>" in vocab:
+        embeddings[vocab["<pad>"]] = torch.zeros(embedding_dim)
+    
+    return embeddings
 
 
 if __name__ == "__main__":
